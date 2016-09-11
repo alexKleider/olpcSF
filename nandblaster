@@ -1,0 +1,33 @@
+
+Nand Blasting Instructions
+
+AKA: How to update/upgrade many XOs ('clients') from a single
+'server' machine. (Due to a bug, the server can not be an XOv4.)
+
+Note: My use case is to batch upgrade XO version 4 laptops (client
+machines) using a pre version 4, specifically a version 1.75, XO lap
+top (the server machine.)
+
+Put the image [1] you want on the 'client' machines (i.e. XO-4 image
+files) onto a (preferably fat formatted) USB stick and plug it into
+the 'server' machine (an XO v<4.0. I used an XO v1.75.)
+
+Power up the server while repeatedly hitting the escape (top left: x)
+key until you get the 'ok' prompt.
+Enter "nb-secure" (followed by 'enter').
+
+Power up each client _while_ pressing all 4 arrow keys (until told
+to release them.)  Installation begins.  Find something else to do:-)
+When all activity stops (several minutes) restart and initialize.
+
+[1] The image consists of two files which can be found here:
+http://wiki.laptop.org/go/Releases
+    As of Sep 10 2016 the latest version:
+    http://wiki.laptop.org/go/Release_notes/13.2.7#XO-4
+    ==> the following two files:
+    a.
+    http://download.laptop.org/xo-4/os/official/13.2.7-19/32019o4.zd
+    b. http://download.laptop.org/xo-4/os/official/13.2.7-19/fs4.zip
+    They need to be renamed as follows:
+        fs.zd (the big file: 3/4Gig) and
+        fs.zip (small file: just over 1Meg) respectively.
