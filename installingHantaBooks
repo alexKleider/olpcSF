@@ -1,0 +1,36 @@
+As of Sep 11 2016
+the way to add Hanta's books is as follows:
+
+A shell script named madaabooks.sh has been prepared to make it
+easier to prepare a freshly upgraded XO laptop for Madagascar.
+
+You will be using a USB stick with the requisite files which are:
+madabooks.sh (the script) and
+madabooks.zip (the books wrapped up in a special format for the XO.)
+
+
+Insert the USB stick and then power up the XO.  If it's for the
+first time since reflashing, you'll have to go through the process
+of entering a name, and (as of the most recent build,) you also
+have the option of specifying gender and school grade, or you can
+simply repeatedly hit 'enter' to accept defaults. 
+
+Use the terminal to execute the following commands:
+(To find the terminal you'll have to change from the spiral display
+which doesn't show it, to the list version, by clicking on the top
+left icon. The activities are listed alphabetically so you'll have
+to scroll down to the bottom to find'terminal'.)
+$ su
+# mount -l
+[# There will be some output, the last line of which will tell you where
+[# your stick is mounted.
+# cd  /run/media/olpc/<label>
+# bash m13f.sh
+# exit
+$ exit
+
+Once this is done, you'll have installed browser accessible content 
+consisting of the 6 Malagasy nature books and a link to the Pathagar 
+Book Server running on the DreamPlug. 
+
+You might have to restart the XO for these changes to take effect.
