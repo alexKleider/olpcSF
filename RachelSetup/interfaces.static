@@ -1,0 +1,21 @@
+auto lo
+iface lo inet loopback
+
+        
+auto eth0
+allow-hotplug eth0
+# iface eth0 inet dhcp
+iface eth0 inet static
+    address 10.0.0.201
+    netmask 255.255.255.0
+    broadcast 10.0.0.255
+    gateway 10.0.0.2
+
+auto wlan0
+iface wlan0 inet static
+address 10.10.10.10
+#address 10.20.20.20
+netmask 255.255.255.0
+
+up iptables-restore < /etc/iptables.ipv4.nat
+

@@ -1,0 +1,166 @@
+Note: This file comes as part of the Setup directory which, if I
+have provided the SD Card, can be found on the card at
+/home/pi/Setup/ (and/or possibly at /root/Setup/.)
+It outlines what has been (or needs to be) done to prepare an
+SD card (the recent models require a micro-SD card)
+to turn a Raspberry Pi into the olpcSF version of a Rachel
+server.  Ours is distinct because the videos have been converted
+to a format readable by the OLPC XO laptop.
+
+========================================
+
+A 64 Gigabyte micro-SD card is required.
+https://www.amazon.com/SanDisk-microSDXC-Standard-Packaging-SDSQUNC-064G-GN6MA/dp/B010Q588D4/ref=sr_1_1?ie=UTF8&qid=1466631506&sr=8-1&keywords=64+GB+microSD+card
+
+What You Will Need:
+    1. A 'host' computer (your laptop or desk top- mine runs Linux,
+details might differ if yours is running another OS.)
+    2. A Raspberry Pi B: currently being shipped is the v.3
+but the older v.2 version is fine and perhaps preferable.
+(The v.3 has a built in WiFi but it can not be made to run in AP
+mode so is of no help in our use case.)
+
+Decide on a name (mine is 'Rachel') for your project directory
+and create it in a location of your choice on your host computer.
+Make it your current working directory and then use the following
+command to download the Raspbian image:
+    wget https://downloads.raspberrypi.org/raspbian_lite_latest
+We'll be using the Pi as a 'headless' server so the 'lite' version 
+(without a desktop) is recommended.
+You should expect to then have the following file in that directory:
+    2016-05-27-raspbian-jessie-lite.zip (Or a later version.)
+It's advisable to run the sha1sum command to check the integrity of the
+download.  (If you don't know what this is, it's not essential.)
+Unzip the file; this gives you the '.img' file.
+Insert the 64 Gig micro-SD card into a card reader connected to your host
+computer and use dmesg to discover its device assignation: probably
+/dev/sdb but be sure you get this right or there could be dire
+consequences.  Once that is done, using root privileges, copy the image
+to the SD card as follows:
+    sudo dd if=/path/to/the/image/file.img of=/dev/sdb bs=4M 
+
+Once done, insert the card into a Raspberry Pi, connect it via Ethernet
+cable to provide local network and internet access, and then boot it up.
+You will need a way to log on.  A screen (connected by HDMI) and a key
+board (connect by USB) will be needed unless you know how to log on
+using ssh (my preferred method- I use arp-scan to give me a list of
+possible IP addresses and am usually able to guess which one belongs to
+the Pi. Comparing the output of arp-scan before plugging in the Pi and
+after, gives it away.)
+NOTE: The last few times it proved impossible to log on using SSH 
+until after doing an initial log on using a console.  This deserves 
+a bit more study.
+
+Log on as pi with 'raspberry' as the password.
+As of the Sept 2015 release, by default the system boots into a
+graphical user interface rather than the command line.[0]
+This can be corrected when raspi-config is run as described next.
+
+On first boot, raspi-config is run.  If not, issue the command: 
+$ raspi-config
+The root file system's partition is expanded to use all of the available
+SD card capacity.  After this you are given the opportunity to change
+many of the configuration settings:
+    1. File system expansion (already done.)
+    2. Default user is pi, I've been setting the pw to pi::root
+    3. Boot into the command line (My preferred default.)
+    4. Internationalization:
+        Default language: en_us.UTF-8  (change from en_gb.UTF-8)
+        Time zone: America, Los_Angeles. (Pacific)
+        Keyboard: generic 105-key seems to work
+            English US
+            default
+            no compose key
+            Control-Alt-Backspace to exit Xwindow
+    5...7. Left in the default state.
+    8. Advanced options:
+        A2. Host name: set to rpi1, rpi2, ...
+        A4. SSH enabled (I believe this is the default.)
+        I believe the other options can be ignored.
+Once done go ahead and reboot as suggested.
+
+
+The next steps depend on the presence of scripts that should be 
+with this file within the Setup directory.
+Copy (scp or rsync) that directory to /root/ and or /home/pi/
+Logged on to the Pi, you'll need root privileges:
+$ cd ~/Setup
+$ sudo su 
+#
+Update, upgrade and install some more software by sourcing  the
+update.sh file.  Be sure the Pi is still connected to the internet,
+preferably using an Ethernet cable. (At this stage there is no need
+for the WiFi dongle.)
+# source update.sh                        [2]
+[See www.raspberrypi.org/forums/viewtopic.php?f=29&t=113753 for a 
+discussion about the fact that the Sept 2015 release bumps to 
+rpi-4.1.y Linux tree and there could be some driver incompatibility
+issues.]
+
+Once this is done reboot to switch to the new system:
+# shutdown -r now
+
+========================================
+
+Some configuration changes are needed to make the Pi into
+a server so that it can host a web page and so that it can be run
+"headless."  Be sure the WiFi dongle is plugged in and the Pi is
+still connected to the internet through an Ethernet cable.
+This is done by giving yourself root privileges and then running
+the create_server.sh script:
+$ sudo su
+# source create_server.sh            #     [3]
+
+There are only two things remaining and they have to do with the server
+(apache2.)  We must move the Rachel content to the
+/var/www/ dirctory tree and we must modify apache's root file system
+configuration.  The content (converted from mp4 to webm format) I can
+provide if you send me a stick or card with 32Gig capacity.
+Then you can connect that card to the pi using an USB card reader and
+transfer the data using the following command:
+# rsync -av /path/to/sdcard/mount/point/Rachel_www/* /var/www/
+
+The last thing is to edit /etc/apache2/sites-available/000-default.conf
+# vim /etc/apache2/sites-available/000-default.conf
+Modify the DocumentRoot line by deleting the trailing html so it reads:
+DocumentRoot /var/www/
+
+Finally we are done.
+
+Use an XO laptop (or any other wifi enabled computer) to connect to the
+Pi's SSID ('1stPi2') and then point the browse activity (or any browser)
+to 10.10.10.10 to see if it all works
+
+
+Foot Notes:
+
+[0] How to prevent always booting into the desktop:
+yet to do
+
+[1] The older Raspberry PiB will also work and/but may or may not
+perform as well.  One source is here:
+http://www.amazon.com/CanaKit-Raspberry-Complete-Original-Preloaded/dp/B008XVAVAW/ref=sr_1_1?ie=UTF8&qid=1431972409&sr=8-1&keywords=canakit+raspberry+pi+2
+
+[2] Some time during August of 2015, some of the sources changed causing
+an incompatability between the new kernel and libraries relating to
+iptables and this causes problems with configuring the server.  The
+problem is solved by adding rpi-update to the script but it's expected
+this problem will go away when a new image is posted so rpi-update will
+then probably no longer be needed and that line should be deleted.
+
+[3] Before running the create_server.sh script, have a look at the
+the hostapd.conf file and change the SSID if need be.  If you expect to
+have more than one server in the same vicinity, it is essential that
+they do not share the same SSID and it would be preferable if they did
+not both use the same channel.  (Their host names should also differ.)
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ps As a reminder to myself:
+1. Include 'auto wlan0' (not essential,) 'auto eth0' (may be OK,)
+   'allow-hotplug eth0' but ...
+   DO NOT  include 'allow-hotplug wlan0'
+statements in /etc/network/interfaces.
+2. Take care that iptables are not loaded twice.
+Me thinks it's the former that was causing our access point problems
+and nothing to do with the iptables.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

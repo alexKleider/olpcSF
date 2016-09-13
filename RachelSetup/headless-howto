@@ -1,0 +1,42 @@
+
+
+        Howto
+The accompanying config-howto file describes how to set up your Pi to
+run 'headless.' The following describes how you (client) can make use
+of this configuration.
+
+Make sure the Raspberry Pi has the following plugged into it:
+    1. The appropriate SD Card
+    2. The USB WiFi dongle
+    3. The ethernet cable (optional) [2]
+and then after all the above is done:
+    4. Plug in the power cord: microUSB cable.
+    (No need for keyboard, mouse or monitor- hence 'headless.')
+
+There is no power switch, simply plugging in a powered microUSB cable turns
+it on.  The Pi will take a few minutes to boot up following which you will
+have a running server.  To make use of the service(s) provided, client
+machines must do the following:
+    Connect to the server's WiFi access point (AP): '1stPi2', '2ndPi2', ...
+    SSH:  (only for system administration)
+        From your command line: ssh pi@10.10.10.10
+        You'll be asked to enter the password for user pi (pi::root)
+        Your client machine is now simply a terminal (keyboard and monitor
+        for your Pi.
+    WWW:  (for 'clients')
+        Use the client's favourite browser (such as Sugar's Browse activity,
+        Chrome, Firefox, Safari, or even Windows) to connect to the server's
+        IP address:  10.10.10.10
+
+For system administration:
+If your Pi is connected to your local network, an alternative way to 
+connect is through the local network (rather than through
+the subnet set up through its WiFi) but to do so you'll need to know its
+IP address.  This can be 'discovered' by the arp-scan command (Run 
+man arp-scan
+to learn how to use it.)
+It provides a listing of IP addresses: you can usually guess which is
+the pi.  Simply try 
+ssh pi@<ip-address>
+until one of the possibilities works.
+

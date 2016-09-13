@@ -1,0 +1,21 @@
+Rachel content server
+
+This file hierarchy was developed to aid in the setting up of a
+Raspberry Pi B to be a Rachel content server.
+
+config-howto: describes preparation of the SD card. 
+create_server.sh: a script that configures the server.
+dnsmasq.conf: one of several files which are needed on the server.
+firewall.sh: a script that sets up the iptable rules.
+    -called from within create_server.sh.
+headless-howto: a guide to logging on whithout a keyboard and screen.
+hostapd: one of several files which are needed on the server.
+hostapd.conf: one of several files which are needed on the server.
+interfaces         |   Various versions of the
+interfaces.static  |   /etc/network/interfaces
+interfaces.tanz    |   file.  Pick the appropriate one.
+rachel-howto: guides client users how to connect to the server.
+save.sh: a script that saves the iptable rules.
+    -called from within create_server.sh.
+update.sh: a script that updates the OS and loads necessary utilities.
+working-interfaces: a working version of /etc/network/interfaces.

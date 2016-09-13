@@ -1,0 +1,43 @@
+
+        Rachel Howto for Antananarivo [0]
+
+Make sure the Raspberry Pi has the following:
+    1. appropriate SD Card inserted.
+    2. USB WiFi dongle[1] in one of the USB ports.
+    4. Plug in the power cord: microUSB cable.  It's important to pay
+attention to the power rating.  Some usb power supplies are rated for
+2.4 Amps- that would be the best.  Some are only 0.7 Amps and these
+usually do not work.  More is better!
+
+
+There is no power switch, simply plugging in a powered microUSB cable turns
+it on.  The Pi will take a few minutes to boot up following which you will
+have a running server.  To make use of the service(s) provided, client
+machines (the XO laptops) must do the following:
+    Connect to the server's WiFi access point (AP): [3]
+        [The SSID for the one being sent to Madagascar in Sept 2017 is
+        'rpia'.  In the past, we've used '1stPi2' or '2ndPi2' or
+        '3rdPi2 ...]
+    Use the client's favourite browser (such as Sugar's Browse activity
+    if using an XO laptop) and enter the server's IP address: 10.10.10.10  
+    into the url line.  Entering 'rachel.lan' will probably also work.
+
+
+[0] This 'Howto' assumes you've been delivered a Rachel configured (by
+Alex Kleider) Raspberry PiB2 content server.  The content is from an
+older version of Rachel and has had all mp4 videos converted to webm in
+order to make them playable by an XO laptop.  This has resulted in a
+much larger file size foot print and is the reason an older version of
+Rachel is used.  There is a separate 'Howto' describing the steps taken
+to do the configuration.  See 'Setup/config-howto'.
+
+[1] We expect to be soon converting to the Raspberry Pi 3 which has an
+internal WiFi device so the external WiFi dongle will no longer be
+necessary.
+
+[2] If the server is connected via ethernet cable, then if the network to
+which it is connected is inturn connected to the internet, clients of the
+server will also have internet connectivity.
+
+[3]  If more than one server is to be deployed in any single location
+then their SSIDs must differ.
