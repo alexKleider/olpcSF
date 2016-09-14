@@ -2,7 +2,6 @@ Can't connect via wifi access point; the Pi's wlan0 configuration:
 wlan0     Link encap:Ethernet  HWaddr 00:0f:60:07:25:0e  
           inet addr:169.254.36.113  Bcast:169.254.255.255
           Mask:255.255.0.0
-Makes no sense.
 
 169.254.xxx.xxx is a link-local address.  
 
