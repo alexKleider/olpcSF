@@ -16,7 +16,7 @@ apt-get -y install iw hostapd dnsmasq apache2
 # If planning to use Pathagar, the following dependencies must be
 # installed to circumnavigate missing mysql_config
 #apt-get -y install libmysqlclient-dev libxml1-dev libxslt2-dev
-apt-get -y install virtualenv fabric
+apt-get -y install virtualenv
 apt-get -y install libmysqlclient-dev python-dev
 apt-get -y install libxml2-dev libxslt1-dev
 
