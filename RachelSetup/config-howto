@@ -1,11 +1,13 @@
-Note: This file comes as part of the Setup directory which, if I
-have provided the SD Card, can be found on the card at
-/home/pi/Setup/ (and/or possibly at /root/Setup/.)
+Note: This file comes as part of the RachelSetup[1] directory
+which, if I have provided the SD Card, can be found on the card
+at /home/pi/RachelSetup/ (and/or possibly at /root/RachelSetup/.)
+** RachelSetup used to be called Setup **
 It outlines what has been (or needs to be) done to prepare an
 SD card (the recent models require a micro-SD card)
 to turn a Raspberry Pi into the olpcSF version of a Rachel
 server.  Ours is distinct because the videos have been converted
 to a format readable by the OLPC XO laptop.
+It is hoped that we will soon be able to also run Pathagar.
 
 ========================================
 
@@ -43,16 +45,17 @@ to the SD card as follows:
 FIRST LOG ONTO RASPBERRY PI
 
 Once done, insert the card into a Raspberry Pi, connect it via Ethernet
-cable to provide local network and internet access, and then boot it up.
+cable to provide local network AND internet access, and power up by
+simply plugging in the micro USB power cable[2].
 You will need a way to log on.  A screen (connected by HDMI) and a key
 board (connect by USB) will be needed unless you know how to log on
 using ssh (my preferred method- I use arp-scan to give me a list of
 possible IP addresses and am usually able to guess which one belongs to
 the Pi. Comparing the output of arp-scan before plugging in the Pi and
 after, gives it away.)
-NOTE: The last few times it proved impossible to log on using SSH 
-until after doing an initial log on using a console.  This deserves 
-a bit more study.
+
+
+RUN RASPI_CONFIG
 
 Log on as pi with 'raspberry' as the password.
 
@@ -83,61 +86,75 @@ Once done go ahead and reboot as suggested.
 UPDATING AND UPGRADING
 
 The next steps depend on the presence of scripts that should be 
-with this file within the Setup directory.  The Setup directory
-is on my 'host machine' so I simply scp or rsync it from my macine
-to /root/ and/or /home/pi/ on the Pi.  Move into the Setup
-directory and give yourself root privileges as follows:
-    $ cd ~/Setup
+with this file within the RachelSetup directory.  The RachelSetup
+directory is on my 'host machine' so I simply scp or rsync it from
+my macine to /root/ and/or /home/pi/ on the Pi.  Move into the
+RachelSetup directory and give yourself root privileges as follows:
+    $ cd ~/RachelSetup
     $ sudo su 
 The prompt changes from '$' to '#'.
 
 Update, upgrade and install more software by sourcing  the
 update.sh file.  Be sure the Pi is still connected to the internet,
-preferably using an Ethernet cable. (At this stage there is no need
-for the WiFi dongle.)
-    # source update.sh                        [2]
-[See www.raspberrypi.org/forums/viewtopic.php?f=29&t=113753 for a 
-discussion about the fact that the Sept 2015 release bumps to 
-rpi-4.1.y Linux tree and there could be some driver incompatibility
-issues.]
+preferably using an Ethernet cable.
+    # source update.sh
 
-Once this is done reboot to switch to the new system.  You will
-now need a WiFi dongle so now is a good time to plug one in before
-running the reboot command:
+A reboot is required to switch over to the new system but before
+doing that, ensure that you have WiFi capability. Rasperry Pi
+models prior to Model 3 require that you have a WiFi dongle[3]
+plugged into one of the USB ports.
+Now you can reboot with the following command:
+
 # shutdown -r now
 
 
 CREATING A SERVER 
 
 Some configuration changes are needed to make the Pi into
-a server so that it can host a web page and so that it can be run
-"headless."  Be sure the WiFi dongle is plugged in and the Pi is
-still connected to the internet through an Ethernet cable.
-This is done by giving yourself root privileges and then running
-the create_server.sh script:
+a server so that it can host a web page and so that it can be
+run "headless." Some customization of the hostapd file will
+most likely be necessary create_server.sh before running the
+next script.: see foot note[4].
+After that's done, be sure of WiFi capability (discussed above) and
+Internet connectivity via an Ethernet cable.
+Give yourself root privileges and then source the script:
 $ sudo su
-# source create_server.sh            #     [3]
+# source create_server.sh
 
-There are only two things remaining and they have to do with the server
-(apache2.)  We must move the Rachel content to the
+
+MOVING CONTENT
+
+There are only two things remaining and they have to do with the
+(apache2) server.  We must move the Rachel content to the
 /var/www/ dirctory tree and we must modify apache's root file system
 configuration.  The content (converted from mp4 to webm format) I can
-provide if you send me a stick or card with 32Gig capacity.
-Then you can connect that card to the pi using an USB card reader and
-transfer the data using the following command:
-# rsync -av /path/to/sdcard/mount/point/Rachel_www/* /var/www/
+provide if you send me a >=32Gig memory stick which you can then plug
+into the pi and transfer the data using the
+following command with root privileges:
 
-What follows can be done with the included apache_site.sh script:
-The last thing is to edit /etc/apache2/sites-available/000-default.conf
+# rsync -av /path/to/memorystick/mount/point/Rachel_www/* /var/www/
+
+
+CONFIGURING APACHE
+
+Most of this can be done by sourcing the included apache_site.sh
+script:
+
+# source apache_site.sh
+
+The last thing is to edit (I use vim) the
+/etc/apache2/sites-available/000-default.conf file:
+
 # vim /etc/apache2/sites-available/000-default.conf
+
 Modify the DocumentRoot line by deleting the trailing html so it reads:
 DocumentRoot /var/www/
 
 Finally we are done.
 
-Use an XO laptop (or any other wifi enabled computer) to connect to the
-Pi's SSID ('1stPi2') and then point the browse activity (or any browser)
-to http://10.10.10.10 to see if it all works.
+Use an XO laptop (or any other wifi enabled computer) to connect to
+the Pi's SSID and then point any browser (on the XO it's the browse
+activity) to http://10.10.10.10 to see if it all works.
 You should also be able to do the same thing using any of the
 following as entries for the URL:
 library
@@ -150,33 +167,22 @@ Good luck!
 
 Foot Notes:
 
-[0] How to prevent always booting into the desktop:
-yet to do
-
-[1] The older Raspberry PiB will also work and/but may or may not
-perform as well.  One source is here:
+ [0] The older Raspberry PiB models will also work and/but may or
+ may not perform as well.  One source is here:
 http://www.amazon.com/CanaKit-Raspberry-Complete-Original-Preloaded/dp/B008XVAVAW/ref=sr_1_1?ie=UTF8&qid=1431972409&sr=8-1&keywords=canakit+raspberry+pi+2
 
-[2] Some time during August of 2015, some of the sources changed causing
-an incompatibility between the new kernel and libraries relating to
-iptables and this causes problems with configuring the server.  The
-problem is solved by adding rpi-update to the script but it's expected
-this problem will go away when a new image is posted so rpi-update will
-then probably no longer be needed and that line should be deleted.
+[1] ** RachelSetup used to be called Setup **
 
-[3] Before running the create_server.sh script, have a look at the
+[2] Power sources vary from 800mA (inadequate!) to over 2A. More is
+better; try to get close to 2A at least.
+
+[3] WiFi is built into the Raspberry Pi 3; a dongle is not needed.
+
+[4] Before running the create_server.sh script, have a look at the
 the hostapd.conf file and change the SSID if need be.  If you expect to
 have more than one server in the same vicinity, it is essential that
 they do not share the same SSID and it would be preferable if they did
-not both use the same channel.  (Their host names should also differ.)
+not both use the same channel.  (Their host names should also differ;
+this is done during execution of rasp-config but can be modified by
+editing /etc/hostname after the fact.)
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-ps As a reminder to myself:
-1. Include 'auto wlan0' (not essential,) 'auto eth0' (may be OK,)
-   'allow-hotplug eth0' but ...
-   DO NOT  include 'allow-hotplug wlan0'
-statements in /etc/network/interfaces.
-2. Take care that iptables are not loaded twice.
-Me thinks it's the former that was causing our access point problems
-and nothing to do with the iptables.
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

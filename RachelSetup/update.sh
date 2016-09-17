@@ -10,6 +10,7 @@ echo "Not necessary since I've discovered the apt-get -y option."
 date && apt-get -y update && apt-get -y upgrade && date
 echo "Just finished updating and upgrading."
 apt-get -y install iw hostapd dnsmasq apache2
+echo "Just finished installing iw, hostapd, dnsmasq, apache2"
 # I have found that the following do not need to be installed:
 # apt-get -y install python-m2crypto curl unzip php5 python-psutil
 
@@ -17,15 +18,25 @@ apt-get -y install iw hostapd dnsmasq apache2
 # installed to circumnavigate missing mysql_config
 #apt-get -y install libmysqlclient-dev libxml1-dev libxslt2-dev
 apt-get -y install virtualenv
+date
+echo "Just finished installing virtualenv."
 apt-get -y install libmysqlclient-dev python-dev
+date
+echo "Just finished installing libmysqlclient-dev & python-dev."
 apt-get -y install libxml2-dev libxslt1-dev
+date
+echo "Just finished installing libxml2-dev & libxslt1-dev."
 
 # The following are not essential for proper functioning
 # of the server but they make my life better.
 apt-get -y install vim vim-scripts git dnsutils screen
+date
+echo "Just finished installing vim, vim-scripts, git,"
+echo "...dnsutils (to bring in dig) & screen."
 # The following are only for those who use vim and like my vim defaults.
 cp .vimrc /root/
 cp .vimrc /home/pi/
+echo "Copied my custom .vimrc file to /root/ and to /home/pi/."
 
 #Notes from Andi re Pathagar:
 #1. clone this repo:
