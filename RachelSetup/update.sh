@@ -1,42 +1,38 @@
 # Source this file after installing raspbian and running raspi-config. 
 # See config_howto
 
-# Last updated Sat Feb 27 18:13:27 PST 2016
+# Last updated Sun Nov 13 05:14:00 PST 2016
 echo "updating, upgrading and installing more software....."
-echo "You will be asked to confirm various steps along the way"
-echo "so keep checking the screen to see if it is waiting for you."
-echo "---------------- The above is ....  ----------------------"
-echo "Not necessary since I've discovered the apt-get -y option."
 date && apt-get -y update && apt-get -y upgrade && date
 echo "Just finished updating and upgrading."
-apt-get -y install iw hostapd dnsmasq apache2
-echo "Just finished installing iw, hostapd, dnsmasq, apache2"
-# I have found that the following do not need to be installed:
-# apt-get -y install python-m2crypto curl unzip php5 python-psutil
+apt-get -y install git iw hostapd dnsmasq apache2
+date
+echo "Just finished installing git, iw, hostapd, dnsmasq, apache2"
 
-# If planning to use Pathagar, the following dependencies must be
-# installed to circumnavigate missing mysql_config
-#apt-get -y install libmysqlclient-dev libxml1-dev libxslt2-dev
-apt-get -y install virtualenv
+# If planning to install Pathagar-  (estimate 3 minites)
+#    using fabric:
+apt-get -y install python-pip python-virtualenv fabric
+#     if planning to use mysql rather than sqlite3, must
+#     circumnavigate missing mysql_config errors and missing
+#     libxml/xmlversion.h errors by installing:
+apt-get -y install libmysqlclient-dev libxml2-dev libxslt1-dev
+apt-get -y install python-dev
 date
-echo "Just finished installing virtualenv."
-apt-get -y install libmysqlclient-dev python-dev
-date
-echo "Just finished installing libmysqlclient-dev & python-dev."
-apt-get -y install libxml2-dev libxslt1-dev
-date
-echo "Just finished installing libxml2-dev & libxslt1-dev."
+echo "Just finished installing python-pip, fabric,"
+echo "..libmysqlclient-dev, libxml2-dev, libxslt1-dev"
+echo "..python-virtualenv and python-dev"
 
 # The following are not essential for proper functioning
 # of the server but they make my life better.
 apt-get -y install vim vim-scripts git dnsutils screen
 date
-echo "Just finished installing vim, vim-scripts, git,"
+echo "Just finished installing vim, vim-scripts,"
 echo "...dnsutils (to bring in dig) & screen."
 # The following are only for those who use vim and like my vim defaults.
 cp .vimrc /root/
 cp .vimrc /home/pi/
 echo "Copied my custom .vimrc file to /root/ and to /home/pi/."
+shutdown -r now
 
 #Notes from Andi re Pathagar:
 #1. clone this repo:

@@ -1,0 +1,23 @@
+File: dealwith
+
+I'd like to figure out how to deal with the inconvenience caused by
+the upgrade process stoping midway to ask for user input to q)uit out
+of the following notification:
+
+raspberrypi-sys-mods (20161018+3) jessie; urgency=medium
+
+  * The 20161018 release has introduced a
+  * /etc/sudoers.d/010_pi-nopasswd file.
+    - The file is installed even if the "pi ALL=(ALL) NOPASSWD: ALL"
+      entry has been
+      previously removed from /etc/sudoers by the user.
+    - If you do not want the entry to exist, please comment out or
+      remove 010_pi-nopasswd.
+    - If upgrading to 20161018+3 from a version earlier than 20161018,
+      the line in
+      010_pi-nopasswd is automatically commented out if the entry
+doesn't exist in sudoers.
+    - See https://github.com/RPi-Distro/raspberrypi-sys-mods/issues/6
+
+ -- Serge Schneider <serge@raspberrypi.org>  Wed, 19 Oct 2016 10:52:07
++0100

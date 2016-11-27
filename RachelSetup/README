@@ -1,21 +1,90 @@
-Rachel content server
+**************
+CONTENT SERVER
+**************
+
+IN NEED OF AN UPDATE!!!!
 
 This file hierarchy was developed to aid in the setting up of a
-Raspberry Pi B to be a Rachel content server.
+Raspberry Pi B to be a Rachel content server (and eventually a
+Pathagar book server.)
 
-config-howto: describes preparation of the SD card. 
-create_server.sh: a script that configures the server.
-dnsmasq.conf: one of several files which are needed on the server.
-firewall.sh: a script that sets up the iptable rules.
-    -called from within create_server.sh.
-headless-howto: a guide to logging on whithout a keyboard and screen.
-hostapd: one of several files which are needed on the server.
-hostapd.conf: one of several files which are needed on the server.
-interfaces         |   Various versions of the
-interfaces.static  |   /etc/network/interfaces
-interfaces.tanz    |   file.  Pick the appropriate one.
-rachel-howto: guides client users how to connect to the server.
-save.sh: a script that saves the iptable rules.
-    -called from within create_server.sh.
-update.sh: a script that updates the OS and loads necessary utilities.
-working-interfaces: a working version of /etc/network/interfaces.
+apache_sites.sh:
+
+config-howto:
+    Describes preparation of the SD card. 
+
+create_server.sh:
+    A script that configures the server.
+
+dnsmasq.conf:
+    One of several files which are needed on the server.
+
+firewall.sh:
+    A script that sets up the iptable rules.
+    It is called from within create_server.sh.
+
+headless-howto:
+    A guide to logging on whithout a keyboard and screen.
+
+hostapd:
+    One of several files which are needed on the server.
+
+hostapd.conf:
+    One of several files which are needed on the server.
+
+interfaces*:
+    Various versions of the /etc/network/interfaces file.
+    Pick the appropriate one.
+
+lib-site:
+    The pathagar config file to go into /etc/apache2/sites-available.
+
+mada-howto:
+
+problems:
+
+rachel-site:
+
+README:
+    The file you are reading.
+
+save.sh:
+    A script that saves the iptable rules.
+    It is called from within create_server.sh.
+
+ServerInstructionsSept16.pdf
+    Needs editing or possibly deleting.
+
+update.sh:
+    A script that updates the OS and loads necessary utilities.
+
+user-howto:
+    Guides client users how to set up and connect to the server.
+
+working-interfaces:
+    A working version of /etc/network/interfaces.
+
+
+-rw-rw-r-- 1 alex alex   195 Nov  6 10:02 apache_sites.sh
+-rw-rw-r-- 1 alex alex  8913 Nov  6 16:21 config-howto
+-rw-r--r-- 1 alex alex  1929 Nov 12 08:58 create_server.sh
+-rw-rw-r-- 1 alex alex   261 May 24  2015 dnsmasq.conf
+-rw-rw-r-- 1 alex alex   185 Apr 10  2015 firewall.sh
+-rw-rw-r-- 1 alex alex  1778 Aug 31  2015 headless-howto
+-rw-rw-r-- 1 alex alex    41 Apr 10  2015 hostapd
+-rw-rw-r-- 1 alex alex   307 Sep 16 14:25 hostapd.conf
+-rw-rw-r-- 1 alex alex   250 Aug 30  2015 interfaces
+-rw-rw-r-- 1 alex alex   357 May 24  2015 interfaces.static
+-rw-rw-r-- 1 alex alex   248 Jun  7  2015 interfaces.tanz
+-rw-rw-r-- 1 alex alex  1453 Nov  6 10:01 lib-site
+-rw-rw-r-- 1 alex alex  2052 Sep 12 17:01 mada-howto
+-rw-rw-r-- 1 alex alex   328 Sep 13 13:28 problems
+-rw-rw-r-- 1 alex alex  1946 Aug 31  2015 rachel-howto
+-rw-r--r-- 1 alex alex  1334 Sep 12 16:31 rachel-site
+-rw-rw-r-- 1 alex alex  1117 Nov 12 09:18 README
+-rw-r--r-- 1 alex alex 12288 Nov 12 09:22 .README.swp
+-rw-rw-r-- 1 alex alex    47 Apr 10  2015 save.sh
+-r-------- 1 alex alex 45157 Sep 13 13:24 ServerInstructionsSept16.pdf
+-rw-rw-r-- 1 alex alex  2179 Sep 16 16:43 update.sh
+-rw-r--r-- 1 alex alex   198 Apr 23  2015 .vimrc
+-rw-r--r-- 1 alex alex   228 Sep 16 14:24 working-interfaces

@@ -10,6 +10,10 @@ auto wlan0
 iface wlan0 inet static
 address 10.10.10.10
 netmask 255.255.255.0
+#  wireless-power off
+   post-up iw dev $IFACE set power_save off
+#see http://raspberrypi.stackexchange.com/questions/43473/does-the-bcm43438-wifi-chip-in-raspberry-pi-3-support-power-management-setting
+
 
 up iptables-restore < /etc/iptables.ipv4.nat
 

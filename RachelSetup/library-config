@@ -1,0 +1,31 @@
+Stub file: library-config
+
+Set up the Pathagar Book Server,
+content to reside in /var/www/library
+or /home/pi/pathagar
+- not yet decided.
+
+What was done with Andi 5th and 6th of Nov. 2016:
+User: pi, /home/pi
+
+git clone https://github.com/PathagarBooks/pathagar.git
+cd pathagar/
+sudo apt-get install python-pip
+sudo pip install -r requirements.pip
+sudo apt-get install fabric
+vim deploy/ubuntu/fabric.py
+    Under SETTINGS, change the following:
+        user => pi
+        db_user => pi
+        db_engine = sqlite3
+        project_name => library
+        project_path => '/var/www/library/%s' ...
+        project_url => library.lan
+vim deploy/ubuntu/settings.conf
+    ADMINS = (
+        ('Alex Kleider', 'alex@kleider.ca'),
+        )
+vim deploy/ubuntu/virtualhost.conf
+    Look it over- unlikely to need to change anything.
+export PYTHONPATH=/usr/bin/python:.
+fab ubuntu bootstrap

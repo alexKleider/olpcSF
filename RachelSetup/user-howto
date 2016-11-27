@@ -3,7 +3,7 @@
 
 Make sure the Raspberry (or Banana) Pi[1] has the following:
     1. appropriate SD Card
-    2. USB WiFi dongle
+    2. USB WiFi dongle (Not needed for Raspberry Pi 3.)
     3. ethernet cable (optional) [2]
 and then after all the above is done:
     4. Plug in the power cord: microUSB cable.  It's important to pay
@@ -17,15 +17,17 @@ it on.  The Pi will take a few minutes to boot up following which you will
 have a running server.  To make use of the service(s) provided, client
 machines must do the following:
     Connect to the server's WiFi access point (AP): [3]
-        [Currently for Tanzania it is '1stPi2' or '2ndPi2']
+        [The SSID will probably have 'pi' as part of its name.]
     Use the client's favourite browser (such as Sugar's Browse activity
     if using an XO laptop, if using some other machine you can use
-    Chrome, Firefox, Safari, or even Windows Explorer) to connect to the
-    server's IP address: 10.10.10.10  
+    Chrome, Firefox, Safari, or even Windows Explorer.)  The URL
+    'rachel.lan' should connect you to the server and provide the
+    Rachel Content.  (Formerly one had to enter the server's IP
+    address instead: 10.10.10.10.)
 
 
 [0] This 'Howto' assumes you've been delivered a Rachel configured (by
-Alex Kleider) Raspberry PiB2 content server.  The content is from an
+Alex Kleider) Raspberry Pi B2(or3) content server.  The content is from an
 older version of Rachel and has had all mp4 videos converted to webm in
 order to make them playable by an XO laptop.  This has resulted in a
 much larger file size foot print and is the reason an older version of
@@ -33,11 +35,12 @@ Rachel is used.  There is a separate 'Howto' describing the steps taken
 to do the configuration.  See 'Setup/config-howto'.
 
 [1] With the availablility of the Raspberry Pi 2B, it has become the
-platform of choice.
+platform of choice. Now the Raspberry Pi 3 is available and is the
+platform of choice since it has built in WiFi and better specs.
 
 [2] If the server is connected via ethernet cable, then if the network to
 which it is connected is inturn connected to the internet, clients of the
 server will also have internet connectivity.
 
 [3]  If more than one server is to be deployed in any single location
-then their SSIDs must differ.
+then their SSIDs (and other configuration parameters) must differ.

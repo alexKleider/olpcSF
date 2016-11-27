@@ -1,0 +1,2 @@
+eth0      Link encap:Ethernet  HWaddr b8:27:eb:42:44:1c  
+lan0     Link encap:Ethernet  HWaddr 8c:ae:4c:f8:27:c4  

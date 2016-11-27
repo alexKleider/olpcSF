@@ -1,0 +1,103 @@
+=============
+SHORT VERSION
+=============
+
+File: **short.txt**
+This file is a condensed version of the **config-howto** file.
+Both come as part of the RachelSetup[1] directory available
+on request: alex@kleider.ca.
+
+===========================
+PREPARING THE micro-SD CARD
+===========================
+
+It's advisable to check the sha1sum of the download before running the
+last of the following commands::
+
+    cd
+    mkdir Rachel
+    cd Rachel
+    wget https://downloads.raspberrypi.org/raspbian_lite_latest
+    unzip 2016-09-23/raspbian-jessie-lite.zip
+    sudo dd if=/path/to/the/image/file.img of=/dev/sdb bs=4M 
+
+
+==================================
+FIRST LOG ON ONTO THE RASPBERRY PI
+==================================
+
+I've found that with recent builds of raspbian, ssh'ing onto
+the pi fails prior to the running of **raspi-config** so it
+appears necessary to first boot up with a screen and keyboard
+connected to the Pi.  Don't forget to connect via Ethernet.
+
+----------------
+RUN RASPI_CONFIG
+----------------
+
+Log on as user 'pi' with password 'raspberry' (NOT 'raspbian'!) 
+and then run::
+
+    raspi-config
+
+and configure as appropriate.  Following this, after a reboot,
+the pi can be run 'headless.'
+
+======================
+UPDATING AND UPGRADING
+======================
+
+Use scp to copy the RachelSetup directory hierarchy to the RPi::
+
+    scp -r /home/alex/olpcSF/RachelSetup pi@10.0.0.11:/home/pi/
+
+Then ssh onto the pi to do the following:: 
+
+    cd ~/RachelSetup
+    sudo su 
+#   mv /etc/sudoers.d/010_pi-nopasswd /etc/sudoers.d/010_pi-nopasswd.original
+    # Above doesn't work because file doesn't exist before the upgrade.
+    source update.sh  #Must enter 'q' midway through. 
+    shutdown -r now
+
+
+=================
+CREATING A SERVER 
+=================
+
+Some customization of the hostapd file will most likely be
+necessary following which::
+
+    sudo su
+    source create_server.sh
+
+
+==============
+MOVING CONTENT
+==============
+
+Assuming you have mounted the Rachel Content on /mnt/Rachel
+the transfer.sh script contains the command needed::
+
+rsync -av /mnt/Rachel/ /var/www/rachel/
+
+
+======
+Usage:
+======
+
+Use an XO laptop (or any other wifi enabled computer) to connect to
+the Pi's SSID and then point any browser (on the XO it's the browse
+activity) to http://10.10.10.10 to see if it all works.
+You should also be able to do the same thing using the following URL:
+rachel.lan
+
+Good luck!
+
+
+===========
+Foot Notes:
+===========
+
+[1] 'RachelSetup' used to be called 'Setup'.
+

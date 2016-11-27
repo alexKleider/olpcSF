@@ -1,48 +1,84 @@
-Note: This file comes as part of the RachelSetup[1] directory
-which, if I have provided the SD Card, can be found on the card
-at /home/pi/RachelSetup/ (and/or possibly at /root/RachelSetup/.)
-** RachelSetup used to be called Setup **
+========
+OVERVIEW
+========
+
+This file comes as part of the RachelSetup[0] directory available
+on request: alex@kleider.ca.
 It outlines what has been (or needs to be) done to prepare an
-SD card (the recent models require a micro-SD card)
-to turn a Raspberry Pi into the olpcSF version of a Rachel
-server.  Ours is distinct because the videos have been converted
-to a format readable by the OLPC XO laptop.
-It is hoped that we will soon be able to also run Pathagar.
+SD card (the recent models require a micro-SD card) to turn a
+Raspberry Pi into the olpcSF version of a Rachel server.  Ours
+is distinct because the videos have been converted to a format
+readable by the OLPC XO laptop.  It is hoped that we will soon
+be able to also run Pathagar.
 
-========================================
-
-A 64 Gigabyte micro-SD card is required.
-https://www.amazon.com/SanDisk-microSDXC-Standard-Packaging-SDSQUNC-064G-GN6MA/dp/B010Q588D4/ref=sr_1_1?ie=UTF8&qid=1466631506&sr=8-1&keywords=64+GB+microSD+card
-
+===========================
 What You Will Need:
-    1. A 'host' computer (your laptop or desk top- mine runs Linux,
+===========================
+
+    #. A 'host' computer.
+Your laptop or desk top serves this purpose- (mine runs Linux,
 details might differ if yours is running another OS.)
-    2. A Raspberry Pi B: currently being shipped is the v.3
-but the older v.2 version is fine and perhaps preferable.
-(The v.3 has a built in WiFi but it can not be made to run in AP
-mode so is of no help in our use case.)
+    
+    #. A copy of the RachelSetup directory hierarchy with the
+files it contains (available on request: alex@kleider.ca)
+
+    #. A Raspberry Pi B [1]
+The following is recommended:
+https://www.amazon.com/Vilros-Raspberry-Basic-Starter-Kit/dp/B01D92SSX6/ref=sr_1_4?s=pc&ie=UTF8&qid=1478455788&sr=1-4&keywords=raspberry+pi
+This includes the version 3 of the Pi as well as a power source
+and a case which you would otherwise need to buy separately.
+
+    #. A micro-SD card:
+A 64 Gig card is what's been used:
+https://www.amazon.com/SanDisk-microSDXC-Standard-Packaging-SDSQUNC-064G-GN6MA/dp/B010Q588D4/ref=sxts_k2p_hero1?pf_rd_m=ATVPDKIKX0DER&pf_rd_p=2668835662&pf_rd_r=16QYH3ZK9VG6PWKGMK7F&pd_rd_wg=p36Kn&pf_rd_s=desktop-sx-top-slot&pf_rd_t=301&pd_rd_w=8DHIV&pf_rd_i=64+gig+micro+sd+card&pd_rd_r=Z7WKX127QHKJKJAC1051&ie=UTF8&qid=1478457333&sr=1
+The newer (v.3) version of the Raspberry pi can accommodate
+128 Gig cards so the following might be preferrable:
+https://www.amazon.com/128GB-Micro-Memory-Quality-Adapter/dp/B01HM93C38/ref=sr_1_2?s=electronics&ie=UTF8&qid=1478457068&sr=1-2&keywords=128+gig+sd+card
+Beware though that prior versions of the Pi can not handle this
+high capacity SD card.
+
+    #. +/- a WiFi Dongle
+The older (v.2) version of the Pi does not have built in WiFi so
+you would also need a WiFi dongle. The one from CanaKit works well:
+https://www.amazon.com/CanaKit-Raspberry-Wireless-Adapter-Dongle/dp/B00GFAN498/ref=sr_1_1?ie=UTF8&qid=1478456116&sr=8-1&keywords=CanaKit+wifi+dongle+for+the+raspberry+pi
+
+===========================
+PREPARING THE micro-SD CARD
+===========================
 
 Decide on a name (mine is 'Rachel') for your project directory
 and create it in a location of your choice on your host computer.
-Make it your current working directory and then use the following
-command to download the Raspbian image:
+Make it your current working directory and then use wget to
+download the Raspbian image::
+
+    cd
+    mkdir Rachel
+    cd Rachel
     wget https://downloads.raspberrypi.org/raspbian_lite_latest
+    unzip 2016-09-23/raspbian-jessie-lite.zip
+
 We'll be using the Pi as a 'headless' server so the 'lite' version 
-(without a desktop) is recommended.
-You should expect to then have the following file in that directory:
-    2016-05-27-raspbian-jessie-lite.zip (Or a later version.)
-It's advisable to run the sha1sum command to check the integrity of the
-download.  (If you don't know what this is, it's not essential.)
-Unzip the file; this gives you the '.img' file.
+(without a desktop) is recommended.  The second last of the above
+commands brings in the following file::
+
+    2016-09-23/raspbian-jessie-lite.zip (Or a later version.)
+
+The last of the commands expands it into an '.img' file.
+It's advisable to run the sha1sum command to check the integrity of
+the download.  (If you don't know what this is, it's not essential.)
+
 Insert the 64 Gig micro-SD card into a card reader connected to your host
 computer and use dmesg to discover its device assignation: probably
 /dev/sdb but be sure you get this right or there could be dire
 consequences.  Once that is done, using root privileges, copy the image
-to the SD card as follows:
+to the SD card as follows::
+
     sudo dd if=/path/to/the/image/file.img of=/dev/sdb bs=4M 
 
 
-FIRST LOG ONTO RASPBERRY PI
+==================================
+FIRST LOG ON ONTO THE RASPBERRY PI
+==================================
 
 Once done, insert the card into a Raspberry Pi, connect it via Ethernet
 cable to provide local network AND internet access, and power up by
@@ -54,13 +90,16 @@ possible IP addresses and am usually able to guess which one belongs to
 the Pi. Comparing the output of arp-scan before plugging in the Pi and
 after, gives it away.)
 
-
+----------------
 RUN RASPI_CONFIG
+----------------
 
-Log on as pi with 'raspberry' as the password.
+Log on as user 'pi' with password 'raspberry'.
 
-On first boot, raspi-config is run.  If not, issue the command: 
-$ raspi-config
+Begin by running the raspi-config command::
+
+    raspi-config
+
 The root file system's partition is expanded to use all of the available
 SD card capacity.  After this you are given the opportunity to change
 many of the configuration settings:
@@ -77,70 +116,82 @@ many of the configuration settings:
             Control-Alt-Backspace to exit Xwindow
     5...7. Left in the default state.
     8. Advanced options:
-        A2. Host name: set to rpi1, rpi2, ...
+        A2. Host name: set to rpi1, rpi2, rachel, (you choose.)
         A4. SSH enabled (I believe this is the default.)
         I believe the other options can be ignored.
-Once done go ahead and reboot as suggested.
+Once done go ahead and reboot as suggested::
+
+    sudo shutdown -r now
 
 
+======================
 UPDATING AND UPGRADING
+======================
 
 The next steps depend on the presence of scripts that should be 
 with this file within the RachelSetup directory.  The RachelSetup
 directory is on my 'host machine' so I simply scp or rsync it from
-my macine to /root/ and/or /home/pi/ on the Pi.  Move into the
-RachelSetup directory and give yourself root privileges as follows:
-    $ cd ~/RachelSetup
-    $ sudo su 
+my macine to /home/pi/ and/or /root/ on the Pi.  Move into the
+RachelSetup directory and give yourself root privileges as follows::
+
+    cd ~/RachelSetup
+    sudo su 
+
 The prompt changes from '$' to '#'.
 
 Update, upgrade and install more software by sourcing  the
 update.sh file.  Be sure the Pi is still connected to the internet,
-preferably using an Ethernet cable.
-    # source update.sh
+preferably using an Ethernet cable::
+
+    mv /etc/sudoers.d/010_pi-nopasswd /etc/sudoers.d/010_pi-nopasswd.original
+    source update.sh
 
 A reboot is required to switch over to the new system but before
-doing that, ensure that you have WiFi capability. Rasperry Pi
+doing that, ensure that you have WiFi capability.  Rasperry Pi
 models prior to Model 3 require that you have a WiFi dongle[3]
 plugged into one of the USB ports.
-Now you can reboot with the following command:
+Now you can reboot with the following command::
 
 # shutdown -r now
 
 
+=================
 CREATING A SERVER 
+=================
 
-Some configuration changes are needed to make the Pi into
-a server so that it can host a web page and so that it can be
-run "headless." Some customization of the hostapd file will
-most likely be necessary create_server.sh before running the
-next script.: see foot note[4].
-After that's done, be sure of WiFi capability (discussed above) and
-Internet connectivity via an Ethernet cable.
-Give yourself root privileges and then source the script:
-$ sudo su
-# source create_server.sh
+Some configuration changes are needed to make the Pi into a web
+server (so that it can provide content to client machines.)  Some
+customization of the hostapd file and possibly the dnsmasq.conf
+file will most likely be necessary[4].  After that's done, be sure
+of WiFi capability (discussed above) and Internet connectivity (via
+an Ethernet cable.)
+
+    sudo su
+    source create_server.sh
 
 
+==============
 MOVING CONTENT
+==============
 
 There are only two things remaining and they have to do with the
-(apache2) server.  We must move the Rachel content to the
-/var/www/ dirctory tree and we must modify apache's root file system
-configuration.  The content (converted from mp4 to webm format) I can
-provide if you send me a >=32Gig memory stick which you can then plug
-into the pi and transfer the data using the
-following command with root privileges:
+(apache2) server.  We must move the Rachel content (28Gigs) to the
+/var/www/rachel dirctory tree and we must modify apache's root file
+system configuration.  The content (converted from mp4 to webm
+format) I can provide if you send me a >=32Gig memory stick which
+you can then plug into the pi and transfer the data using the
+following command with root privileges::
 
-# rsync -av /path/to/memorystick/mount/point/Rachel_www/* /var/www/
+    rsync -av /path/to/mount/point/Rachel_www/* /var/www/rachel
 
-
+------------------
 CONFIGURING APACHE
+------------------
 
 Most of this can be done by sourcing the included apache_site.sh
-script:
+script::
 
-# source apache_site.sh
+    source apache_site.sh
 
 The last thing is to edit (I use vim) the
 /etc/apache2/sites-available/000-default.conf file:
@@ -148,7 +199,7 @@ The last thing is to edit (I use vim) the
 # vim /etc/apache2/sites-available/000-default.conf
 
 Modify the DocumentRoot line by deleting the trailing html so it reads:
-DocumentRoot /var/www/
+DocumentRoot /var/www/rachel
 
 Finally we are done.
 
@@ -167,14 +218,14 @@ Good luck!
 
 Foot Notes:
 
- [0] The older Raspberry PiB models will also work and/but may or
+[0] 'RachelSetup' used to be called 'Setup'.
+
+[1] The older Raspberry PiB models will also work and/but may or
  may not perform as well.  One source is here:
 http://www.amazon.com/CanaKit-Raspberry-Complete-Original-Preloaded/dp/B008XVAVAW/ref=sr_1_1?ie=UTF8&qid=1431972409&sr=8-1&keywords=canakit+raspberry+pi+2
 
-[1] ** RachelSetup used to be called Setup **
-
-[2] Power sources vary from 800mA (inadequate!) to over 2A. More is
-better; try to get close to 2A at least.
+[2] Power sources vary from 800mA (inadequate!) to over 2A. More
+is better; try to get close to 2A at least.
 
 [3] WiFi is built into the Raspberry Pi 3; a dongle is not needed.
 
