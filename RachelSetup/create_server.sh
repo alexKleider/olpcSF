@@ -12,10 +12,6 @@
 
 # First check that you haven't already sourced this file:
 
-# File: testif.sh
-
-# Test if statement regarding '...original' files.
-
 fname='/etc/default/hostapd.original';
 afirmative='yes'
 if [[ -e $fname ]]; then
@@ -28,10 +24,10 @@ if [[ -e $fname ]]; then
         echo Answer provided is $answer
         echo "OK, if you say so we will go ahead!"
     else
-        echo "Answer provided is ${answer} which is not ${afirmative}, so aborting."
+        echo "You have wisely decided to abort."
     fi
 else
-    echo "File called $fname not present so safe to proceed."
+#    echo "File called $fname not present so safe to proceed."
 
 # The rest of the script is with in this 'else' segment.
 
@@ -108,7 +104,7 @@ service apache2 reload
 # USB device with LABEL=Rachel, then the following will cause it to
 # be automatically mounted:
 cp /etc/fstab /etc/fstab.original
-echo "LABEL=Rachel /mnt/Rachel ext4 defaults 0 0" >> /etc/fstab
+echo "LABEL=Rachel /mnt/Rachel ext4 nofail 0 0" >> /etc/fstab
 
 echo "   |vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv|"
 echo "   | Might get an error:                       |"
@@ -117,15 +113,5 @@ echo "   |                                           |"
 echo "   | A reboot will probably fix everything.    |"
 echo "   |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|"
 
-
-echo "   |vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv|"
-echo "   | Before the next reboot be sure to either  |"
-echo "   | 1. have attached media with LABEL=Rachel. |"
-echo "   | OR                                        |"
-echo "   | 2. run the clean_fstab.sh script.         |"
-echo "   |                                           |"
-echo "   | The transfer.sh script assumes (1) and    |"
-echo "   | performs (2) for you.                     |"
-echo "   |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|"
 
 fi

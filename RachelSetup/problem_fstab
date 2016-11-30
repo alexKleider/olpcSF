@@ -1,0 +1,26 @@
+# File: problem_fstab
+===============
+'fstab' Problem
+===============
+
+The following error::
+
+    a start job is running for dev-disk-by
+
+    Welcome to emergency mode! After logging in, type "journalctl -xb" to
+    view system logs, "systemctl reboot" to reboot, "systemctl default" to
+    try again to boot into default mode.
+    sulogin: root account is locked, starting shell
+    root@pi-4:~#
+    
+seems to occur if there is an entry in fstab, such as::
+
+    LABEL=Rachel /mnt/Rachel ext4 defaults 0 0
+
+when there is no appropriately labeled device to mount.
+
+The solution proved to be the nofail option (rather than 'defaults'.)
+Thanks to the sfLUG mailing list and in particular Akkana,
+Michael, & Rick.
+
+
