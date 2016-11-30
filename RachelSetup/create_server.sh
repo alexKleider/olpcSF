@@ -1,6 +1,6 @@
 # File: create_server.sh
 
-# File last modified Sat Nov 26 17:37:35 PST 2016
+# File last modified Sun Nov 27 22:17:21 PST 2016
 
 # Before sourcing this file:
 #  1: be sure it and it's dependencies are in the cwd.
@@ -9,6 +9,31 @@
 #  of each other.
 #  This applies to SSID and, less critically, to the channel (6, 1, 11)
 #  you plan to use.  I have been making the SSID match the hostname.
+
+# First check that you haven't already sourced this file:
+
+# File: testif.sh
+
+# Test if statement regarding '...original' files.
+
+fname='/etc/default/hostapd.original';
+afirmative='yes'
+if [[ -e $fname ]]; then
+    echo "File with the name $fname exists."
+    echo "This indicates that this script has already been run."
+    echo "Are you sure you want to go ahead? Best not to!!"
+
+    read answer 
+    if [[ $answer = $afirmative ]]; then
+        echo Answer provided is $answer
+        echo "OK, if you say so we will go ahead!"
+    else
+        echo "Answer provided is ${answer} which is not ${afirmative}, so aborting."
+    fi
+else
+    echo "File called $fname not present so safe to proceed."
+
+# The rest of the script is with in this 'else' segment.
 
 # Rename originals and then copy over the following:
 mv /etc/default/hostapd /etc/default/hostapd.original
@@ -36,11 +61,12 @@ source save.sh
 # Prepare a mount point for the Rachel Content
 mkdir /mnt/Rachel
 chown pi:pi /mnt/Rachel
-# Assuming the Rachel Content will be provided on an ext4 formatted
-# USB device with LABEL=Rachel, then the following will cause it to
-# be automatically mounted:
-cp /etc/fstab /etc/fstab.original
-echo "LABEL=Rachel /mnt/Rachel ext4 defaults 0 0" >> /etc/fstab
+# The entry 
+# 10.10.10.10  library.lan rachel.lan
+# in /etc/hosts will direct wifi dhcp clients to server.
+# The ultimate goal is to have
+#               library.lan directed to pathagar book server
+#           and rachel.lan directed to rachel content server.
 
 # The following two directories are created to host content:
 # one for the rachel content server and the other for the
@@ -54,9 +80,9 @@ chown pi:pi /var/www/library
 # The first prepares the scene for moving Rachel content onto
 # the server with a command similar to the following:
 
-# IF the Rachel site is mounted at /mnt/1/Rachel, the following line
+# IF the Rachel site is mounted at /mnt/Rachel, the following line
 # can be uncommented.
-# rsync -av /mnt/1/Rachel/ /var/www/rachel/
+# rsync -av /mnt/Rachel/ /var/www/rachel/
 # Find this command in transfer.sh which can be sourced.
 
 # Server set up:
@@ -78,16 +104,28 @@ service apache2 reload
 # rachel.lan.  Will still need to replace test site index.html
 # with the full Rachel Content.
 
+# Assuming the Rachel Content will be provided on an ext4 formatted
+# USB device with LABEL=Rachel, then the following will cause it to
+# be automatically mounted:
+cp /etc/fstab /etc/fstab.original
+echo "LABEL=Rachel /mnt/Rachel ext4 defaults 0 0" >> /etc/fstab
 
 echo "   |vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv|"
-echo "   | Do a reboot if things aren't quite right. |"
+echo "   | Might get an error:                       |"
+echo "   | Warning: Unit file of apache2.service ... |"
+echo "   |                                           |"
+echo "   | A reboot will probably fix everything.    |"
 echo "   |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|"
 
 
-# The following entry in /etc/hosts will direct wifi dhcp
-# clients to server.
-# 10.10.10.10  library library.lan rachel rachel.lan
-# The ultimate goal is to have
-#               library* directed to pathagar book server
-#           and rachel* directed to rachel content server.
+echo "   |vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv|"
+echo "   | Before the next reboot be sure to either  |"
+echo "   | 1. have attached media with LABEL=Rachel. |"
+echo "   | OR                                        |"
+echo "   | 2. run the clean_fstab.sh script.         |"
+echo "   |                                           |"
+echo "   | The transfer.sh script assumes (1) and    |"
+echo "   | performs (2) for you.                     |"
+echo "   |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|"
 
+fi

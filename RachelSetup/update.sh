@@ -3,7 +3,9 @@
 
 # Last updated Sun Nov 13 05:14:00 PST 2016
 echo "updating, upgrading and installing more software....."
-date && apt-get -y update && apt-get -y upgrade && date
+# The echo 'q' | part of command below is to overcome the problem
+# described in file 'dealwith'.
+date && apt-get -y update && echo 'q' | apt-get -y upgrade && date
 echo "Just finished updating and upgrading."
 apt-get -y install git iw hostapd dnsmasq apache2
 date

@@ -21,3 +21,7 @@ doesn't exist in sudoers.
 
  -- Serge Schneider <serge@raspberrypi.org>  Wed, 19 Oct 2016 10:52:07
 +0100
+
+First attempt is to modify a line in update.sh as follows:
+date && apt-get -y update && echo 'q' | apt-get -y upgrade && date
+i.e. add the "echo 'q' | " part.

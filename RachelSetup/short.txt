@@ -55,10 +55,8 @@ Then ssh onto the pi to do the following::
 
     cd ~/RachelSetup
     sudo su 
-#   mv /etc/sudoers.d/010_pi-nopasswd /etc/sudoers.d/010_pi-nopasswd.original
-    # Above doesn't work because file doesn't exist before the upgrade.
-    source update.sh  #Must enter 'q' midway through. 
-    shutdown -r now
+    source update.sh  # May need to enter 'q' midway through. 
+    shutdown -r now  # No need for this; included in the script.
 
 
 =================
@@ -71,6 +69,9 @@ necessary following which::
     sudo su
     source create_server.sh
 
+Note: Don't reboot between running create_server.sh and running the
+transfer.sh scripts.  The latter re-establishes the original
+/etc/fstab file.  If this isn't done, the Pi won't boot properly!
 
 ==============
 MOVING CONTENT
@@ -79,8 +80,10 @@ MOVING CONTENT
 Assuming you have mounted the Rachel Content on /mnt/Rachel
 the transfer.sh script contains the command needed::
 
-rsync -av /mnt/Rachel/ /var/www/rachel/
+    rsync -av /mnt/Rachel/ /var/www/rachel/
 
+This script (transfer.sh) also resets /etc/fstab to its original
+state.
 
 ======
 Usage:

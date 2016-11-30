@@ -1,3 +1,5 @@
+MODEL 2s:
+
 Raspberry Pi 2 Model B v1.1 2014
     Heavy metal case- silver colour
     eth0  b8:27:eb:5a:2d:97
@@ -14,8 +16,10 @@ Raspberry Pi 2 Model B v1.1 2014
     On date Fri Nov 25 16:19:44 PST 2016
         pi-5 "pi-5" Channel 11
 
+MODEL 3s:
+
 Raspberry Pi 3 Model B v1.2 2015
-    Vilros Clear Case- Pi3-0
+    Vilros Clear Case- ** Pi3-0 **
     eth0      b8:27:eb:53:a3:51    
 eth0      Link encap:Ethernet  HWaddr b8:27:eb:53:a3:51  
           inet addr:10.0.0.15
@@ -26,11 +30,26 @@ eth0      Link encap:Ethernet  HWaddr b8:27:eb:53:a3:51
     On date Fri Nov 25 15:19:42 PST 2016
         pi-3 "pi-3" Channel 6
 
+Raspberry Pi 3 Model B v1.2 2015
+    Vilros Clear Case- ** Pi3-1 **
+        eth0      b8:27:eb:da:2a:98  
+        wlan0     b8:27:eb:8f:7f:cd  
+
+64Gig-2: pi-4 "pi-4"  channel 6
+    On date ~Mon Nov 28 19:30:44 PST 2016
+    
+
+
+
+
+
+
+
+64Gig-1:  pi-3 "pi-3" Channel 6
+    On date Fri Nov 25 15:19:42 PST 2016
+      
+
 64Gig-0:
     On date Mon Nov 21 13:54:07 PST 2016:
         pi-2 "pi-2" Channel 11
-
-10.0.0.9    b8:27:eb:42:44:1c   (Unknown)
-10.0.0.15   b8:27:eb:53:a3:51   (Unknown)
-10.0.0.22   64:bc:0c:4c:71:5b   (Unknown)
 
