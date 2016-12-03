@@ -1,39 +1,19 @@
-# File: Pathagar/setup  (no longer ...sh)
-# Renamed because shouldn't be sourced.
+# File: Pathagar/setup
 
 # Begins the process of setting up the pathagar book server.
-
-echo "#==========================================#"
-echo "#   Note: for some reason, sourcing this   #"
-echo "#   file seems not to work. (Must end in sh?) #"
-echo "#   Best to just issue the commands one    #"
-echo "#   at a time from the command line.       #"
-echo "#   Type yes only if you want to go ahead. #"
-echo "#==========================================#"
-
-
-afirmative='yes'
-read answer 
-if [[ $answer = $afirmative ]]; then
-    
-    echo Answer provided is $answer
-    echo "OK, if you say so we will go ahead!"
-
-# Body of script:
-    wd=`pwd`
-    cd /home/pi
-    su pi
-    git clone https://github.com/PathagarBooks/pathagar.git
-    cd pathagar
-    sudo pip install -r requirements.pip
-
-    cd $wd
+# As user pi:
+cd
+git clone https://github.com/PathagarBooks/pathagar.git
+cd pathagar
+# sudo pip install -r requirements.pip  # It may be that fabric
+                    # sets up the virtualenv and runs this later
+                    # so perhaps this line should be left out.
 
 patdir=/home/pi/pathagar/deploy/ubuntu
 setdir=/home/pi/RachelSetup/Pathagar
-fab='fabric.py'
-set='settings.conf'
-virt='virtualhost.conf'
+fab='fabric.py'         # Customised versions
+set='settings.conf'     # are in
+virt='virtualhost.conf' # $setdir.
 cp ${patdir}/${fab}  ${patdir}/${fab}.original 
 cp ${patdir}/${set}  ${patdir}/${set}.original 
 cp ${patdir}/${virt}  ${patdir}/${virt}.original 
@@ -48,11 +28,13 @@ echo PYTHONPATH="/home/pi/pathagar" >> /etc/profile
 #    `deploy/ubuntu/fabric.py`        }  Configure the
 #    `deploy/ubuntu/settings.conf`    }  server to your
 #    `deploy/ubuntu/virtualhost.conf` }  needs.
+# I've created my own customized versions which can be found 
+# in RachelSetup/Pathagar (or github.com/alexKleider/olpcSF.git)
 
-# Create directories to hold pathagar's code, logs and environment:
-    `fab ubuntu bootstrap`
+# Create directories to hold pathagar's code, logs and environment::
+    fab ubuntu bootstrap  # This executed OK
 # Configure apache (and specify file locations:
-    `fab ubuntu deploy`
+    fab ubuntu deploy
 # The above failed because of library.conf- perhaps a permissions
 # problem-  hoping to get around it by creating a hard copy and moving
 # it over:
@@ -87,5 +69,3 @@ Please note that our fabric scripts are still under beta. If you come
 across any problems please feel free to ask for help.
 
 
-# Script ends.
-fi
