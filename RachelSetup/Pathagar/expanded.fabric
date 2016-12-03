@@ -1,0 +1,21 @@
+SETTINGS['hosts'] = ['localhost']
+SETTINGS['user'] = 'pi'
+SETTINGS['db_engine'] = "django.db.backends.sqlite3"
+SETTINGS['db_name'] = 'db'
+SETTINGS['db_user'] = 'pi'
+SETTINGS['db_password'] = ''
+SETTINGS['db_password_opt'] = '-p'
+SETTINGS['project_name'] = 'library'
+SETTINGS['project_url'] = 'library.lan'
+SETTINGS['project_path'] = '/var/www/library'
+
+SETTINGS['project_repo_path'] = '/var/www/library/src/pathagar'
+SETTINGS['project_repo'] = 'https://github.com/PathagarBooks/pathagar.git'
+SETTINGS['project_settings_path'] = '/var/www/library/src/pathagar/settings.py'
+
+SETTINGS['secret_key'] = b64encode(urandom(50))
+SETTINGS['python'] = 'python2.7'
+SETTINGS['env_path'] = '/var/www/library/env'
+SETTINGS['server_group'] = 'www-data'
+SETTINGS['vhost_file'] = '/etc/apache2/sites-available/library'
+SETTINGS['wsgi_file'] = '/var/www/library/wsgi.py'

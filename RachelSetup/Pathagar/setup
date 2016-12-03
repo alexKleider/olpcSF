@@ -1,0 +1,91 @@
+# File: Pathagar/setup  (no longer ...sh)
+# Renamed because shouldn't be sourced.
+
+# Begins the process of setting up the pathagar book server.
+
+echo "#==========================================#"
+echo "#   Note: for some reason, sourcing this   #"
+echo "#   file seems not to work. (Must end in sh?) #"
+echo "#   Best to just issue the commands one    #"
+echo "#   at a time from the command line.       #"
+echo "#   Type yes only if you want to go ahead. #"
+echo "#==========================================#"
+
+
+afirmative='yes'
+read answer 
+if [[ $answer = $afirmative ]]; then
+    
+    echo Answer provided is $answer
+    echo "OK, if you say so we will go ahead!"
+
+# Body of script:
+    wd=`pwd`
+    cd /home/pi
+    su pi
+    git clone https://github.com/PathagarBooks/pathagar.git
+    cd pathagar
+    sudo pip install -r requirements.pip
+
+    cd $wd
+
+patdir=/home/pi/pathagar/deploy/ubuntu
+setdir=/home/pi/RachelSetup/Pathagar
+fab='fabric.py'
+set='settings.conf'
+virt='virtualhost.conf'
+cp ${patdir}/${fab}  ${patdir}/${fab}.original 
+cp ${patdir}/${set}  ${patdir}/${set}.original 
+cp ${patdir}/${virt}  ${patdir}/${virt}.original 
+cp ${setdir}/${fab}  ${patdir}/${fab}
+cp ${setdir}/${set}  ${patdir}/${set}
+cp ${setdir}/${virt}  ${patdir}/${virt}
+
+PYTHONPATH="/home/pi/pathagar"
+echo PYTHONPATH="/home/pi/pathagar" >> /etc/profile
+
+# Edit:
+#    `deploy/ubuntu/fabric.py`        }  Configure the
+#    `deploy/ubuntu/settings.conf`    }  server to your
+#    `deploy/ubuntu/virtualhost.conf` }  needs.
+
+# Create directories to hold pathagar's code, logs and environment:
+    `fab ubuntu bootstrap`
+# Configure apache (and specify file locations:
+    `fab ubuntu deploy`
+# The above failed because of library.conf- perhaps a permissions
+# problem-  hoping to get around it by creating a hard copy and moving
+# it over:
+sudo cp ${setdir}/library.conf /etc/apache2/sites-available/
+
+#
+# Setup our databases:
+    `fab ubuntu create_db`
+=> ERROR!!!!!!!!!!!!!!!!!!!!! : 
+pi@pi-3:~/pathagar $ fab ubuntu create_db
+[localhost] Executing task 'create_db'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/fabric/main.py", line 743, in main
+    *args, **kwargs
+  File "/usr/lib/python2.7/dist-packages/fabric/tasks.py", line 384, in execute
+    multiprocessing
+  File "/usr/lib/python2.7/dist-packages/fabric/tasks.py", line 274, in _execute
+    return task.run(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/fabric/tasks.py", line 174, in run
+    return self.wrapped(*args, **kwargs)
+  File "/home/pi/pathagar/fabfile.py", line 169, in create_db
+    _create_db_sqlite3(database)
+NameError: global name 'database' is not defined
+
+
+
+    `fab ubuntu setup_db`
+Done! You should now have a working instance of pathagar running on
+your server.
+
+Please note that our fabric scripts are still under beta. If you come
+across any problems please feel free to ask for help.
+
+
+# Script ends.
+fi

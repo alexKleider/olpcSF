@@ -68,9 +68,10 @@ chown pi:pi /mnt/Rachel
 # one for the rachel content server and the other for the
 # pathagar book server.
 mkdir /var/www/rachel
-mkdir /var/www/library
 chown pi:pi /var/www/rachel
-chown pi:pi /var/www/library
+# mkdir /var/www/library
+# chown pi:pi /var/www/library
+
 # If get an error about resolving host name, check that the correct
 # host name appears in /etc/hosts: 127.0.1.1 <hostname>.
 # The first prepares the scene for moving Rachel content onto

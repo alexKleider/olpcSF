@@ -1,0 +1,7 @@
+# File: Pathagar/notes
+
+Script update.sh brings in the expected dependencies.
+Script create_server.sh sets up some directory structures (which may
+or may not prove to be necessary.)
+Script Pathagar/setup.sh clones the pathagar repo and installs what's
+specified in its requirements.pip file.

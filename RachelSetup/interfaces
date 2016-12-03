@@ -9,7 +9,6 @@ auto wlan0
 #allow-hotplug wlan0
 iface wlan0 inet static
 address 10.10.10.10
-#address 10.20.20.20
 netmask 255.255.255.0
 #  wireless-power off
    post-up iw dev $IFACE set power_save off

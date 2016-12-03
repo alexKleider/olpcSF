@@ -34,7 +34,15 @@ echo "...dnsutils (to bring in dig) & screen."
 cp .vimrc /root/
 cp .vimrc /home/pi/
 echo "Copied my custom .vimrc file to /root/ and to /home/pi/."
+
+echo "  |=========================================|"
+echo "  | Update completed- will now do a reboot. |"
+echo"   |=========================================|"
 shutdown -r now
+
+#============#
+#  PATHAGAR  #
+#============#
 
 #Notes from Andi re Pathagar:
 #1. clone this repo:
@@ -48,4 +56,8 @@ shutdown -r now
 #  inside the pathagar directory
 #and it finished fine.
 #Andi
+
+# Necessary installs (except those specified in requirements.pip) have
+# been installed using this (update.sh) script.
+# The rest is done by the accompanying pathagar.sh script.
 
