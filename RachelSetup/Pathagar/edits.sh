@@ -15,3 +15,6 @@ cp ${patdir}/${virt}  ${patdir}/${virt}.original
 cp ${setdir}/${fab}  ${patdir}/${fab}
 cp ${setdir}/${set}  ${patdir}/${set}
 cp ${setdir}/${virt}  ${patdir}/${virt}
+
+PYTHONPATH="/home/pi/pathagar"
+echo PYTHONPATH="/home/pi/pathagar" >> /etc/profile

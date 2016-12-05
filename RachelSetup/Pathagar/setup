@@ -1,6 +1,10 @@
 # File: Pathagar/setup
 
-# Begins the process of setting up the pathagar book server.
+# Plan is to eventually let this become a script that will
+# set up the pathagar book server.
+# For now it's just a record of the steps I'm using in my 
+# (so far, failed) attempts.
+
 # As user pi:
 cd
 git clone https://github.com/PathagarBooks/pathagar.git
@@ -9,6 +13,14 @@ cd pathagar
                     # sets up the virtualenv and runs this later
                     # so perhaps this line should be left out.
 
+# Edit:
+#    `deploy/ubuntu/fabric.py`        }  Configure the
+#    `deploy/ubuntu/settings.conf`    }  server to your
+#    `deploy/ubuntu/virtualhost.conf` }  needs.
+# I've created my own customized versions which can be found 
+# in RachelSetup/Pathagar (or github.com/alexKleider/olpcSF.git.)
+# The following 13 lines (which can be found and sourced in
+# edits.sh) will bring in the customized versions:
 patdir=/home/pi/pathagar/deploy/ubuntu
 setdir=/home/pi/RachelSetup/Pathagar
 fab='fabric.py'         # Customised versions
@@ -20,25 +32,75 @@ cp ${patdir}/${virt}  ${patdir}/${virt}.original
 cp ${setdir}/${fab}  ${patdir}/${fab}
 cp ${setdir}/${set}  ${patdir}/${set}
 cp ${setdir}/${virt}  ${patdir}/${virt}
-
 PYTHONPATH="/home/pi/pathagar"
 echo PYTHONPATH="/home/pi/pathagar" >> /etc/profile
-
-# Edit:
-#    `deploy/ubuntu/fabric.py`        }  Configure the
-#    `deploy/ubuntu/settings.conf`    }  server to your
-#    `deploy/ubuntu/virtualhost.conf` }  needs.
-# I've created my own customized versions which can be found 
-# in RachelSetup/Pathagar (or github.com/alexKleider/olpcSF.git)
+# The previous two lines set the PYTHONPATH environment variable
+# and make it globally available after the next reboot.
 
 # Create directories to hold pathagar's code, logs and environment::
-    fab ubuntu bootstrap  # This executed OK
-# Configure apache (and specify file locations:
+    fab ubuntu bootstrap  # Executes OK ....
+pi@pi-3:~/pathagar $ fab ubuntu bootstrap
+[localhost] Executing task 'bootstrap'
+[localhost] Login password for 'pi': 
+Bootstrapping initial directories...
+[localhost] sudo: mkdir -p /var/www/library
+[localhost] sudo: mkdir -p /var/www/library/logs
+[localhost] sudo: chmod -R g=u /var/www/library
+[localhost] sudo: chown -R pi:www-data /var/www/library
+[localhost] run: virtualenv -p python2.7 --no-site-packages /var/www/library/env
+[localhost] run: easy_install pip
+[localhost] run: git clone https://github.com/PathagarBooks/pathagar.git /var/www/library/src/pathagar
+[localhost] run: touch /var/www/library/src/pathagar/../__init__.py
+[localhost] run: git checkout master
+[localhost] run: git pull
+[localhost] run: git checkout master
+[localhost] run: chmod -R go=u,go-w /var/www/library/src/pathagar
+[localhost] run: mkdir -p /var/www/library/src/pathagar/static_media/books
+[localhost] sudo: chmod g+rwxs /var/www/library/src/pathagar/static_media/books
+[localhost] run: pip install -r /var/www/library/src/pathagar/requirements.pip
+[localhost] run: chmod -R go=u,go-w /var/www/library/env
+
+Done.
+Disconnecting from localhost... done.
+pi@pi-3:~/pathagar $ 
+
+
+# Configure apache (and specify file locations):
     fab ubuntu deploy
-# The above failed because of library.conf- perhaps a permissions
-# problem-  hoping to get around it by creating a hard copy and moving
-# it over:
-sudo cp ${setdir}/library.conf /etc/apache2/sites-available/
+pi@pi-3:~/pathagar $ fab ubuntu deploy
+[localhost] Executing task 'deploy'
+Deploying the site...
+Getting the latest code and dependencies...
+[localhost] run: git checkout master
+[localhost] Login password for 'pi': 
+[localhost] run: git pull
+[localhost] run: git checkout master
+[localhost] run: chmod -R go=u,go-w /var/www/library/src/pathagar
+[localhost] sudo: chmod g+rwxs /var/www/library/src/pathagar/static_media/books
+[localhost] run: pip install -U -r /var/www/library/src/pathagar/requirements.pip
+[localhost] run: chmod -R go=u,go-w /var/www/library/env
+Configuring and installing site...
+[localhost] put: <file obj> -> /etc/apache2/sites-available/library
+[localhost] run: cp "$(echo /var/www/library/src/pathagar/settings.py)"{,.bak}
+[localhost] put: <file obj> -> /var/www/library/src/pathagar/settings.py
+Enabling site...
+[localhost] sudo: a2ensite library
+
+Fatal error: sudo() received nonzero return code 1 while executing!
+
+Requested: a2ensite library
+Executed: sudo -S -p 'sudo password:'  /bin/bash -l -c "source /var/www/library/env/bin/activate && a2ensite library"
+
+================================================ Standard output ================================================
+
+ERROR: /etc/apache2/sites-enabled/library.conf is a dangling symlink!
+ERROR: Site library does not exist!
+
+=================================================================================================================
+
+Aborting.
+Disconnecting from localhost... done.
+pi@pi-3:~/pathagar $
 
 #
 # Setup our databases:

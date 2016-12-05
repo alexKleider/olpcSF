@@ -1,0 +1,24 @@
+# File: short-read
+#
+# A condensed version of the README.mkd file that
+# accompanies the pathagar repository.
+
+# Use fabric to setup Pathagar on your server::
+  apt-get install fabric virtualenv
+# edit deploy/ubuntu/fabric.py
+#      deploy/ubuntu/settings.conf
+#      deploy/ubuntu/virtualhost.conf  according to your needs.
+
+# Create directories to hold pathagar's code, logs and environment::
+  fab ubuntu bootstrap
+
+# Configure (file locations) and run apache through mod_wsgi::
+  fab ubuntu deploy
+
+# Setup databases::
+  fab ubuntu create_db
+  fab ubuntu setup_db
+
+# Should now have a working instance of
+# pathagar running on your server.
+
