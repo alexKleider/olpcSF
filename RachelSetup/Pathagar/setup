@@ -102,9 +102,58 @@ Aborting.
 Disconnecting from localhost... done.
 pi@pi-3:~/pathagar $
 
+Having gotten the above error the following steps were taken:
+sudo rm /etc/apache2/sites-available/library.conf 
+sudo rm /etc/apache2/sites-enabled/library.conf 
+sudo rm -rf /var/www/library/
+sudo chown root:pi /var/www
+sudo chmod 775 /var/www
+cd pathagar/
+fab ubuntu bootstrap
+.... Which again ran successfully.
+
+
 #
 # Setup our databases:
-    `fab ubuntu create_db`
+# This time ran it as follows:
+sudo fab ubuntu create_db
+# But as sudo, PYTHONPATH wasn't recognized.
+# running the following ran until the exact same error came up as
+# before.
+fab ubuntu deploy
+#
+# Further investigation reveals that a2ensite expects the file to end
+# in ".conf".
+# http://stackoverflow.com/questions/20591889/site-does-not-exist-error-for-a2ensite
+# ... so /etc/sites-available/library was renamed library.conf and ran
+sudo a2ensite library
+# ... but this also failed: a clue might be found here:
+#pi@pi-3:/etc/init.d $ sudo systemctl status apache2.service
+#● apache2.service - LSB: Apache2 web server
+#   Loaded: loaded (/etc/init.d/apache2)
+#     Drop-In: /lib/systemd/system/apache2.service.d
+#                └─forking.conf
+#  Active: failed (Result: exit-code) since Mon
+#  2016-12-05 17:36:13 PST; 22s ago
+#    Process: 1093 ExecStart=/etc/init.d/apache2
+#    start (code=exited, status=1/FAILURE)
+#
+#    Dec 05 17:36:13 pi-3 apache2[1093]: Starting web server: apache2 failed!
+#    Dec 05 17:36:13 pi-3 apache2[1093]: The apache2 configtest failed. ... (war...).
+#    Dec 05 17:36:13 pi-3 apache2[1093]: Output of config test was:
+#    Dec 05 17:36:13 pi-3 apache2[1093]: AH00526: Syntax error on line 1 of /etc...f:
+#    Dec 05 17:36:13 pi-3 apache2[1093]: Invalid command 'WSGIRestrictEmbedded',...on
+#    Dec 05 17:36:13 pi-3 apache2[1093]: Action 'configtest' failed.
+#    Dec 05 17:36:13 pi-3 apache2[1093]: The Apache error log may have more info...n.
+#    Dec 05 17:36:13 pi-3 systemd[1]: apache2.service: control process exited, c...=1
+#    Dec 05 17:36:13 pi-3 systemd[1]: Failed to start LSB: Apache2 web server.
+#    Dec 05 17:36:13 pi-3 systemd[1]: Unit apache2.service entered failed state.
+
+#     Warning: Unit file changed on disk, 'systemctl daemon-reload' recommended.
+#     Hint: Some lines were ellipsized, use -l to show in full.
+#
+
+
 => ERROR!!!!!!!!!!!!!!!!!!!!! : 
 pi@pi-3:~/pathagar $ fab ubuntu create_db
 [localhost] Executing task 'create_db'
@@ -121,7 +170,8 @@ Traceback (most recent call last):
     _create_db_sqlite3(database)
 NameError: global name 'database' is not defined
 
-
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Still to go after above problem has been sorted:
 
     `fab ubuntu setup_db`
 Done! You should now have a working instance of pathagar running on
