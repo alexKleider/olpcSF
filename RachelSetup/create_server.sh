@@ -1,6 +1,6 @@
 # File: create_server.sh
 
-# File last modified Sun Nov 27 22:17:21 PST 2016
+# File last modified Tue Dec  6 18:04:53 PST 2016
 
 # Before sourcing this file:
 #  1: be sure it and it's dependencies are in the cwd.
@@ -9,6 +9,8 @@
 #  of each other.
 #  This applies to SSID and, less critically, to the channel (6, 1, 11)
 #  you plan to use.  I have been making the SSID match the hostname.
+#  3: Choose which file you want to move into /etc/network/interfaces-
+#  See line #45.
 
 # First check that you haven't already sourced this file:
 
@@ -39,7 +41,9 @@ cp hostapd.conf /etc/hostapd/hostapd.conf
 mv /etc/network/interfaces /etc/network/interfaces.original
 cp interfaces.tanz /etc/network/interfaces.tanz
 cp interfaces.static /etc/network/interfaces.static
-cp working-interfaces /etc/network/interfaces
+cp interfaces.dhcp /etc/network/interfaces.dhcp
+# Next line can be one of '.tanz', '.static', or '.dhcp'
+cp interfaces.dhcp /etc/network/interfaces
 mv /etc/dnsmasq.conf /etc/dnsmasq.conf.original
 cp dnsmasq.conf /etc/dnsmasq.conf
 echo "10.10.10.10  library library.lan rachel rachel.lan" >> /etc/hosts
@@ -74,13 +78,6 @@ chown pi:pi /var/www/rachel
 
 # If get an error about resolving host name, check that the correct
 # host name appears in /etc/hosts: 127.0.1.1 <hostname>.
-# The first prepares the scene for moving Rachel content onto
-# the server with a command similar to the following:
-
-# IF the Rachel site is mounted at /mnt/Rachel, the following line
-# can be uncommented.
-# rsync -av /mnt/Rachel/ /var/www/rachel/
-# Find this command in transfer.sh which can be sourced.
 
 # Server set up:
 cp rachel-site /etc/apache2/sites-available/rachel.conf
