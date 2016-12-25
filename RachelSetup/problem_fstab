@@ -18,9 +18,11 @@ seems to occur if there is an entry in fstab, such as::
     LABEL=Rachel /mnt/Rachel ext4 defaults 0 0
 
 when there is no appropriately labeled device to mount.
+Solve the problem by replacing it with the following line::
+
+    LABEL=Rachel /mnt/Rachel ext4 nofail 0 0
 
 The solution proved to be the nofail option (rather than 'defaults'.)
 Thanks to the sfLUG mailing list and in particular Akkana,
 Michael, & Rick.
-
 

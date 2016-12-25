@@ -18,9 +18,10 @@ cd pathagar
 #    `deploy/ubuntu/settings.conf`    }  server to your
 #    `deploy/ubuntu/virtualhost.conf` }  needs.
 # I've created my own customized versions which can be found 
-# in RachelSetup/Pathagar (or github.com/alexKleider/olpcSF.git.)
-# The following 13 lines (which can be found and sourced in
-# edits.sh) will bring in the customized versions:
+# in RachelSetup/Pathagar 
+# (https://github.com/alexKleider/olpcSF/tree/develop/RachelSetup/Pathagar.)
+# The following 13 lines (which can be found and sourced
+# in edits.sh) will bring in the customized versions:
 patdir=/home/pi/pathagar/deploy/ubuntu
 setdir=/home/pi/RachelSetup/Pathagar
 fab='fabric.py'         # Customised versions

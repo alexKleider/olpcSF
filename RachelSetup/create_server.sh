@@ -9,8 +9,10 @@
 #  of each other.
 #  This applies to SSID and, less critically, to the channel (6, 1, 11)
 #  you plan to use.  I have been making the SSID match the hostname.
+#  Also uncomment the last 4 lines if you want passphrase protection.
 #  3: Choose which file you want to move into /etc/network/interfaces-
-#  See line #45.
+#  See line 48:
+#  mv interfaces.XXXX /etc/network/inderfaces
 
 # First check that you haven't already sourced this file:
 

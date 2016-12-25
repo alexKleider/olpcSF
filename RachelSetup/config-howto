@@ -4,6 +4,7 @@ OVERVIEW
 
 This file comes as part of the RachelSetup[0] directory available
 on request: alex@kleider.ca.
+A more concise version is in short.txt.
 It outlines what has been (or needs to be) done to prepare an
 SD card (the recent models require a micro-SD card) to turn a
 Raspberry Pi into the olpcSF version of a Rachel server.  Ours
@@ -41,6 +42,9 @@ high capacity SD card.
 The older (v.2) version of the Pi does not have built in WiFi so
 you would also need a WiFi dongle. The one from CanaKit works well:
 https://www.amazon.com/CanaKit-Raspberry-Wireless-Adapter-Dongle/dp/B00GFAN498/ref=sr_1_1?ie=UTF8&qid=1478456116&sr=8-1&keywords=CanaKit+wifi+dongle+for+the+raspberry+pi
+If you have a WiFi dongle but it doesn't work, it's likely based on
+the Realtek RTL8188CUS chipset: help can be found in the Realtek
+subdirectory.
 
 ===========================
 PREPARING THE micro-SD CARD

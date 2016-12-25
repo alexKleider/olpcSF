@@ -1,0 +1,19 @@
+https://www.maketecheasier.com/set-up-raspberry-pi-as-wireless-access-point/
+
+For adapters based on the Realtek RTL8188CUS chipset:
+The rtl871xdrv driver is required.
+
+Command::
+
+    iw list
+
+==> "nl80211 not found"
+
+Also need a special version of hostapd available in precompiled form
+from Adafruit::
+
+    wget http://www.adafruit.com/downloads/adafruit_hostapd.zip 
+    unzip adafruit_hostapd.zip 
+    sudo mv /usr/sbin/hostapd /usr/sbin/hostapd.ORIG 
+    sudo mv hostapd /usr/sbin
+    sudo chmod 755 /usr/sbin/hostapd
