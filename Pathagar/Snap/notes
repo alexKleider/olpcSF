@@ -1,0 +1,11 @@
+http://snapcraft.io/
+http://news.softpedia.com/news/snapcraft-gui-makes-snap-packaging-a-breeze-install-it-now-in-ubuntu-16-04-lts-508356.shtml
+http://snapcraft.io/docs/build-snaps/your-first-snap
+
+https://developer.ubuntu.com/en/snappy/start/raspberry-pi-2/
+
+use # Note: replace /dev/sdX with the device name of your SD card
+(e.g. /dev/mmcblk0, /dev/sdg1 ...)
+
+xzcat ~/Downloads/ubuntu-core-16-pi3.img.xz | sudo dd of=/dev/sdX bs=32M
+sync

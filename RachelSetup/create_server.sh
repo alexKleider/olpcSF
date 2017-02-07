@@ -3,16 +3,16 @@
 # File last modified Tue Dec  6 18:04:53 PST 2016
 
 # Before sourcing this file:
+
+# Before sourcing this file:
 #  1: be sure it and it's dependencies are in the cwd.
 #  2: have a look at hostapd.conf and modify accordingly, ESPECIALLY
 #  if you plan to have more than one server operating within range
-#  of each other.
-#  This applies to SSID and, less critically, to the channel (6, 1, 11)
-#  you plan to use.  I have been making the SSID match the hostname.
-#  Also uncomment the last 4 lines if you want passphrase protection.
-#  3: Choose which file you want to move into /etc/network/interfaces-
-#  See line 48:
-#  mv interfaces.XXXX /etc/network/inderfaces
+#  of each other.  This applies to SSID and, less critically, to the
+#  channel (6, 1, 11) you plan to use.  I have been making the SSID
+#  match the hostname.
+#  The file hostapd.conf.wpa is still a work in progress: I've been
+#  unsuccessful getting protected wifi working.
 
 # First check that you haven't already sourced this file:
 
@@ -79,7 +79,10 @@ chown pi:pi /var/www/rachel
 # chown pi:pi /var/www/library
 
 # If get an error about resolving host name, check that the correct
-# host name appears in /etc/hosts: 127.0.1.1 <hostname>.
+# host name appears in /etc/hosts:
+#       127.0.0.1 localhost localhost.localdomain <hostname>
+#       127.0.1.1 <hostname>.
+# and that /etc/hostname contains the correct <hostname>
 
 # Server set up:
 cp rachel-site /etc/apache2/sites-available/rachel.conf

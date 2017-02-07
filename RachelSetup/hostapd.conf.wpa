@@ -1,0 +1,22 @@
+# File:  hostapda.conf.wpa
+#
+# As recommended @ http://elinux.org/RPI-Wireless-Hotspot
+
+interface=wlan0
+driver=nl80211
+## Modify next line?
+ssid=pi3-0
+hw_mode=g
+# Possibly select a different channel.
+#channel=1
+channel=6
+#channel=11
+macaddr_acl=0
+auth_algs=1
+ignore_broadcast_ssid=0
+wpa=2
+## Modify next line?
+wpa_passphrase=I forgot it
+wpa_key_mgmt=WPA-PSK
+rsn_pairwise=CCMP
+

@@ -1,0 +1,10 @@
+NOTE: two places to look.
+~/olpcSF/RachelSetup/Pathagar
+~/olpcSF/Pathagar
+
+The former represents my attempts to use Fabric to add Pathagar to an
+already existing Rachel installation.  ==> FAILURE
+
+The latter (current directory) are attempts to do it some other way.
+
+

@@ -1,0 +1,21 @@
+===== Metal Case- RPi2 =====
+
+USB WiFi dongle: 
+
+hardware determined:
+    eth0  b8:27:eb:5a:2d:97  
+    wlan0 00:0f:54:02:25:08  10.10.10.10
+
+micro SD dependent:
+    /etc/hostname:
+        pi-2
+
+    /etc/hosts:
+        127.0.0.1	localhost
+        ::1		localhost ip6-localhost ip6-loopback
+        ff02::1		ip6-allnodes
+        ff02::2		ip6-allrouters
+
+        127.0.1.1	pi-2
+        10.10.10.10  library library.lan rachel rachel.lan
+

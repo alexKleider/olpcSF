@@ -1,0 +1,52 @@
+
+  As Tony has pointed out, shared access to a common 'micro-server'
+device such as a RPi can easily be provided by ssh for command line
+usage. This is relatively simple to implement and an RPi can
+effectively host quite a number of users this way as it is generally a
+lightweight load.  
+   Generally this is a great way to extend the useful life of XOs
+without having to do major software development and deployment to
+individual devices.
+
+   In a similar vein, the web browser on an XO can provide a rich
+graphical interface to a common 'micro-server' to access information
+and services. The load is obviously somewhat greater than for command
+line, but it is surprising what can be achieved with even small server
+devices.
+
+= A good example is an XO-1 (Sugar) with gstreamer installed playing
+Khan Academy mp4 videos from VillageTelco's MP2 accesspoint / RACHEL
+(WorldPossible.org). Reasonable performance in extending for low cost
+the use of the XO-1 in a classroom not having internet access.
+
+http://wiki.laptop.org/go/GStreamer
+https://store.villagetelco.com/mesh-potato-2-rachel.html
+
+ The limitation seems to be more about getting good web browser
+behaviour at the XO end, particularly for the early model devices.   
+   It would be good to see some work done on this aspect, but I am not
+sure that just porting current browsers to the platform will give a
+good result because they appear to be quite resource hungry,
+particularly for things like Flash. I suspect there may be some
+benefit in developing good HTML5 behaviour in a lightweight browser
+that will run well on older devices.   
+   For a good example of what can be done with simple static HTML5
+content, have a look at the PhET simulations from University of
+Colorado, Boulder. This content is easy to serve from small devices,
+but the XO browsers struggle to handle it.   
+   [1]https://phet.colorado.edu/en/simulations/category/html [2]   
+   $0.02...   Regards   Terry
+
+========================================================================
+
+Hi Nathan,
+
+Rachel has apparently generated these mp4 videos by using a smaller
+frame size and, perhaps, bit-rate limiting. When I can come up for
+air, I hope to look into the technique more. You are certainly right
+that downloading the video to the XO and using gstreamer works better
+in a classroom than attempting to have the video streamed from the
+server.
+
+Tony
+

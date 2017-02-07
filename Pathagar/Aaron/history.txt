@@ -1,0 +1,77 @@
+# File: history.txt
+
+# My (Alex Kleider) modification of this file initially put together
+# by Aaron and available here:
+# https://gist.github.com/adborden/ddfb179bf1759682ce2dff4938701a93
+
+git clone https://github.com/PathagarBooks/pathagar.git
+
+sudo apt-get update && sudo apt-get upgrade && sudo apt-get install apache2 build-essential libapache2-mod-wsgi libmysqlclient-dev libxml2-dev libxslt-dev mysql-server python-dev python-virtualenv
+# The above command pauses for user input three times
+# each time asking for a mysql password; a blank is accepted.
+
+sudo vim /etc/apache2/sites-available/pathagar.conf 
+# Change each instance of 'vagrant' to 'path/to/pathagar'
+# In my case the following vim command does the job:
+# :% substitute /vagrant/home\/alex\/pathagar/g
+# AND modify (by adding "library" the WSGIScriptAlias line.
+## a version of such a file accompanies this file.
+
+sudo a2ensite pathagar.conf
+sudo service apache2 reload
+virtualenv -p python2.7 venv
+source venv/bin/activate
+pip install -r requirements.pip 
+python manage.py syncdb
+python manage.py runserver
+# Teminate server with CTL-C before going on.
+ln -s . pathagar
+# Is the above necessary if directory is already called 'pathagar' as
+# it would be if cloned using the first command (above?)
+python manage.py staticfiles
+# ?Should above line be deleted?
+python manage.py collectstatic
+# The above command results in the following output:
+#    You have requested to collect static files at the destination
+#    location as specified in your settings.
+
+#    This will overwrite existing files!
+#    Are you sure you want to do this?
+
+#    Type 'yes' to continue, or 'no' to cancel:
+## I risked it and answered 'yes'.
+sudo service apache2 reload
+
+#### REMAINDER IS OF HISTORICAL INTEREST ONLY ####
+## After above was done on the Raspberry Pi- a client browser (my
+## laptop) successfully got to pathagar using the URL "10.0.0.11"
+## (the Pi's eth0 IP address) or (after connecting to the Pi's WiFi
+## access point) using the URL "10.10.10.10" (the Pi's wlan0 IP.)
+
+### The remaining problem is that rachel is now "hidden"!
+### Is there someway to configure apache 'VirtualHost' setting
+### so that I could serve both pathagar AND rachel?
+### The question may be answered here:
+http://stackoverflow.com/questions/10081062/django-virtual-host-setup-apache-mod-wsgi
+
+<VirtualHost *:80>
+ServerAdmin admin@example.com
+ServerName  testserver.com/django
+#DocumentRoot /
+WSGIScriptAlias / /home/mycode/mysite/scripts/django.wsgi
+Alias /media/ /home/mycode/mysite/mysite/media/
+Alias /adminmedia/
+/opt/python2.7/lib/python2.7/site-packages/django/contrib/admin/media/
+<Directory "/home/mycode/mysite/mysite/media">
+     Order deny,allow
+     Allow from all
+    </Directory>
+</VirtualHost>
+
+Change:
+WSGIScriptAlias / /home/mycode/mysite/scripts/django.wsgi
+to:
+WSGIScriptAlias /django /home/mycode/mysite/scripts/django.wsgi
+The first argument is the mount point, you have it to be the root of
+the web server, so just change it to '/django' instead.
+

@@ -1,15 +1,15 @@
 MODEL 2s:
 
 *** *** *** *** *** *** *** *** *** *** *** ***
-*** Funtioning as a Rachel Server ***
 Raspberry Pi 2 Model B v1.1 2014
     Heavy metal case- silver colour
     eth0  b8:27:eb:5a:2d:97
     wlan0 00:0f:54:02:25:08
     WiFi: WiPi usb dongle
-64Gig-0:
-    On date Mon Nov 21 13:54:07 PST 2016:
-        pi-2 "pi-2" Channel 11
+64Gig-0: pi-2 "pi-2" Channel 11
+    Feb  3, 2017:
+        Serving Pathagar running on Django 1.4
+        Rachel Server functionality has been lost.
 *** *** *** *** *** *** *** *** *** ***
 
 
